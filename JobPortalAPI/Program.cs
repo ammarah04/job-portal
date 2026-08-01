@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using JobPortalAPI.Hubs;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -93,6 +94,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<IMatchingService, MatchingService>();
+builder.Services.AddSignalR();
 
 // with the other builder.Services lines
 builder.Services.AddCors(options =>
@@ -101,9 +103,12 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:3000")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
+
+
 
 var app = builder.Build();
 
@@ -121,5 +126,6 @@ app.UseCors("AllowReactApp");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<SkillGapHub>("/hubs/skillgap");
 
 app.Run();

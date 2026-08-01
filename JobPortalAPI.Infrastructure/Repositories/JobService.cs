@@ -145,4 +145,10 @@ public class JobService : IJobService
         ExpiryDate = job.ExpiryDate,
         RecruiterName = job.Recruiter?.FullName ?? "Unknown"
     };
+
+    public async Task<List<JobResponseDto>> GetMyJobsAsync(Guid recruiterId)
+    {
+        var jobs = await _jobRepository.GetByRecruiterIdAsync(recruiterId);
+        return jobs.Select(MapToDto).ToList();
+    }
 }

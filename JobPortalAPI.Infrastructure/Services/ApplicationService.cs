@@ -82,4 +82,25 @@ public class ApplicationService : IApplicationService
         application.Status = parsedStatus;
         await _applicationRepository.UpdateAsync(application);
     }
+
+    public async Task<List<ApplicantResponseDto>> GetApplicantsForJobAsync(Guid jobId, Guid recruiterId)
+    {
+        var job = await _jobRepository.GetByIdAsync(jobId)
+            ?? throw new KeyNotFoundException("Job not found.");
+
+        if (job.RecruiterId != recruiterId)
+            throw new UnauthorizedAccessException("You are not authorised to view applicants for this job.");
+
+        var applications = await _applicationRepository.GetByJobIdAsync(jobId);
+
+        return applications.Select(a => new ApplicantResponseDto
+        {
+            Id = a.Id,
+            CandidateName = a.Candidate?.FullName ?? string.Empty,
+            CandidateEmail = a.Candidate?.Email ?? string.Empty,
+            Status = a.Status.ToString(),
+            AppliedAt = a.AppliedAt,
+            CVFilePath = a.CVFilePath
+        }).ToList();
+    }
 }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj": {}
+    "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj": {
+    "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj",
+        "projectUniqueName": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj",
         "projectName": "JobPortalAPI.Application",
-        "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj",
-        "packagesPath": "C:\\Users\\uzair\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\obj\\",
+        "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj",
+        "packagesPath": "C:\\Users\\Microsoft\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\uzair\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Microsoft\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -30,10 +30,11 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
-                "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj"
+              "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
+                "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj"
               }
             }
           }
@@ -48,10 +49,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "FluentValidation": {
@@ -78,24 +80,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
+    "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj",
         "projectName": "JobPortalAPI.Domain",
-        "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj",
-        "packagesPath": "C:\\Users\\uzair\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\obj\\",
+        "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj",
+        "packagesPath": "C:\\Users\\Microsoft\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\uzair\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Microsoft\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -108,6 +110,7 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {}
           }
@@ -122,10 +125,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "imports": [
             "net461",
@@ -143,24 +147,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj": {
+    "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj",
         "projectName": "JobPortalAPI.Infrastructure",
-        "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\uzair\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\obj\\",
+        "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\JobPortalAPI.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Microsoft\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\uzair\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Microsoft\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -173,13 +177,14 @@
         },
         "frameworks": {
           "net8.0": {
+            "framework": "net8.0",
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj": {
-                "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj"
+              "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj": {
+                "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Application\\JobPortalAPI.Application.csproj"
               },
-              "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
-                "projectPath": "C:\\Users\\uzair\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj"
+              "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj": {
+                "projectPath": "C:\\Users\\Microsoft\\source\\repos\\JobPortalAPI\\JobPortalAPI.Domain\\JobPortalAPI.Domain.csproj"
               }
             }
           }
@@ -194,10 +199,11 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.300"
       },
       "frameworks": {
         "net8.0": {
+          "framework": "net8.0",
           "targetAlias": "net8.0",
           "dependencies": {
             "BCrypt.Net-Next": {
@@ -256,7 +262,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

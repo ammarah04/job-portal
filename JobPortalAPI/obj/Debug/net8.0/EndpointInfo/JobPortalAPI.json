@@ -90,6 +90,29 @@
         }
       }
     },
+    "/api/applications/job/{jobId}": {
+      "get": {
+        "tags": [
+          "Application"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Auth/register": {
       "post": {
         "tags": [
@@ -319,6 +342,18 @@
               "format": "double"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Jobs/mine": {
+      "get": {
+        "tags": [
+          "Jobs"
         ],
         "responses": {
           "200": {
@@ -623,6 +658,10 @@
             "format": "uuid"
           },
           "cvFilePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "connectionId": {
             "type": "string",
             "nullable": true
           }

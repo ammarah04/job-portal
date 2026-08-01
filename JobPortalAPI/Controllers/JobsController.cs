@@ -56,6 +56,24 @@ public class JobsController : ControllerBase
         }
     }
 
+    [HttpGet("mine")]
+    [Authorize(Roles = "Recruiter")]
+    public async Task<IActionResult> GetMyJobs()
+    {
+        try
+        {
+            var recruiterId = Guid.Parse(
+                User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            var result = await _jobService.GetMyJobsAsync(recruiterId);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetJobById(Guid id)
     {

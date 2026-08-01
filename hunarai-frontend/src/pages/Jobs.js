@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useEffect } from "react";
+import { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import useEmblaCarousel from "embla-carousel-react";
@@ -7,7 +7,60 @@ import Navbar from "../components/Navbar";
 
 const API_BASE = "https://localhost:7259/api";
 
-function JobCard({ job, index, onClick }) {
+// One of: "idle" | "uploading" | "applying" | "applied" | "already-applied" | "error"
+function ApplyButton({ job, status, onApply }) {
+  const fileInputRef = useRef(null);
+
+  const handleClick = (e) => {
+    e.stopPropagation(); // don't trigger the card's onClick (goToSkillGap)
+    if (status === "applied" || status === "already-applied") return;
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) onApply(job, file);
+    e.target.value = ""; // allow re-selecting the same file later if it errors
+  };
+
+  const labels = {
+    idle: "Apply to job",
+    uploading: "Uploading resume...",
+    applying: "Submitting application...",
+    applied: "Applied ✓",
+    "already-applied": "Already applied",
+    error: "Failed — try again",
+  };
+
+  const isDisabled = status === "uploading" || status === "applying" || status === "applied" || status === "already-applied";
+
+  return (
+    <>
+      <input
+        type="file"
+        accept="application/pdf"
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        className="hidden"
+      />
+      <button
+        onClick={handleClick}
+        disabled={isDisabled}
+        className={`w-full text-xs font-medium py-2 rounded-lg transition-colors duration-150 mt-3 ${
+          status === "applied" || status === "already-applied"
+            ? "bg-sand/50 text-stone cursor-default"
+            : status === "error"
+            ? "bg-red-50 text-red-600 border border-red-200 hover:bg-red-100"
+            : "bg-gold hover:bg-gold/90 text-ink disabled:opacity-60"
+        }`}
+      >
+        {labels[status] || labels.idle}
+      </button>
+    </>
+  );
+}
+
+function JobCard({ job, index, onClick, applyStatus, onApply }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -27,6 +80,7 @@ function JobCard({ job, index, onClick }) {
           PKR {job.salary?.toLocaleString()}
         </span>
       </div>
+      <ApplyButton job={job} status={applyStatus} onApply={onApply} />
     </motion.div>
   );
 }
@@ -36,6 +90,9 @@ export default function Jobs() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [minSalary, setMinSalary] = useState(0);
+
+  // tracks apply status per job id, e.g. { "job-guid-1": "applied" }
+  const [applyStatuses, setApplyStatuses] = useState({});
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
@@ -60,6 +117,51 @@ export default function Jobs() {
     navigate("/skill-gap", {
       state: { jobId: job.id, jobTitle: `${job.title} @ ${job.recruiterName}` },
     });
+  };
+
+  const handleApply = async (job, file) => {
+    const token = localStorage.getItem("token");
+    const setStatus = (status) =>
+      setApplyStatuses((prev) => ({ ...prev, [job.id]: status }));
+
+    setStatus("uploading");
+
+    try {
+      // 1. Upload the resume, same pattern as Skill Gap
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const uploadRes = await axios.post(`${API_BASE}/files/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const cvFilePath = uploadRes.data.filePath;
+
+      // 2. Submit the application
+      setStatus("applying");
+
+      await axios.post(
+        `${API_BASE}/applications`,
+        { jobId: job.id, cvFilePath },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setStatus("applied");
+    } catch (err) {
+      if (err.response?.status === 409) {
+        setStatus("already-applied");
+      } else if (err.response?.status === 401) {
+        alert("Please log in as a Candidate first.");
+        setStatus("idle");
+      } else if (err.response?.status === 403) {
+        alert("Only Candidates can apply to jobs.");
+        setStatus("idle");
+      } else {
+        setStatus("error");
+      }
+    }
   };
 
   const filteredJobs = useMemo(
@@ -143,7 +245,13 @@ export default function Jobs() {
             <div className="flex gap-4">
               {jobs.map((job, i) => (
                 <div key={job.id} className="min-w-[220px] flex-shrink-0">
-                  <JobCard job={job} index={i} onClick={() => goToSkillGap(job)} />
+                  <JobCard
+                    job={job}
+                    index={i}
+                    onClick={() => goToSkillGap(job)}
+                    applyStatus={applyStatuses[job.id] || "idle"}
+                    onApply={handleApply}
+                  />
                 </div>
               ))}
             </div>
@@ -190,6 +298,8 @@ export default function Jobs() {
                   job={job}
                   index={i}
                   onClick={() => goToSkillGap(job)}
+                  applyStatus={applyStatuses[job.id] || "idle"}
+                  onApply={handleApply}
                 />
               ))}
             </div>

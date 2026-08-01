@@ -84,4 +84,12 @@ public class JobRepository : IJobRepository
         _context.Jobs.Remove(job);
         await _context.SaveChangesAsync();
     }
+    public async Task<List<Job>> GetByRecruiterIdAsync(Guid recruiterId)
+    {
+        return await _context.Jobs
+            .Include(j => j.Recruiter)
+            .Where(j => j.RecruiterId == recruiterId)
+            .OrderByDescending(j => j.CreatedAt)
+            .ToListAsync();
+    }
 }

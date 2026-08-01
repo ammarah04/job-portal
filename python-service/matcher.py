@@ -1,6 +1,8 @@
 from sentence_transformers import SentenceTransformer
 from qdrant_client import QdrantClient
 from qdrant_client.models import VectorParams, Distance, PointStruct
+from skill_extractor import extract_skills
+from skill_normalizer import normalize_skills
 
 # setup
 model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -19,35 +21,71 @@ jobs = [
     {"id": 3, "title": "Python AI Engineer", "description": "Need a Python developer with machine learning, NLP, SBERT, sentence embeddings, vector databases, Qdrant, RAG pipelines, FastAPI, semantic search, and GPT integration experience."},
     {"id": 4, "title": "Graphic Designer", "description": "Creative designer needed with Photoshop, Illustrator, Adobe XD, typography, branding, and visual design skills."},
 ]
-# store jobs in qdrant
+
 def index_jobs(job_list):
     for job in job_list:
-        vector = model.encode(job["description"]).tolist()
+
+        skills = normalize_skills(
+            extract_skills(job["description"])
+    )
+        skills_text = " ".join(skills)
+
+        if not skills_text.strip():
+            skills_text = job["description"]
+
+        vector = model.encode(skills_text).tolist()
+
+        print(f"\n{job['title']}")
+        print("Extracted Skills:", skills)
+
         client.upsert(
             collection_name="jobs",
-            points=[PointStruct(
-                id=job["id"],
-                vector=vector,
-                payload={"title": job["title"], "job_id": job["id"]}
-            )]
+            points=[
+                PointStruct(
+                    id=job["id"],
+                    vector=vector,
+                    payload={
+                        "title": job["title"],
+                        "job_id": job["id"],
+                        "skills": skills
+                    }
+                )
+            ]
         )
-    print(f"{len(job_list)} jobs indexed successfully\n")
+
+    print(f"\n{len(job_list)} jobs indexed successfully\n")
 
 # match a resume against stored jobs
 def match_resume(resume_text, top_k=3):
-    resume_vector = model.encode(resume_text).tolist()
+
+    skills = normalize_skills(
+        extract_skills(resume_text)
+    )
+    skills_text = " ".join(skills)
+
+    if not skills_text.strip():
+        skills_text = resume_text
+
+    print("\nResume Skills:")
+    print(skills)
+
+    resume_vector = model.encode(skills_text).tolist()
+
     results = client.query_points(
         collection_name="jobs",
         query=resume_vector,
         limit=top_k
     )
+
     matches = []
+
     for r in results.points:
         matches.append({
             "job_id": r.payload["job_id"],
             "title": r.payload["title"],
-            "match_score": round(r.score * 100, 2)  # convert to percentage
+            "match_score": round(r.score * 100, 2)
         })
+
     return matches
 
 # run

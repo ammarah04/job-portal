@@ -1,0 +1,688 @@
+2026-07-30 11:18:31.759 +05:00 [INF] User profile is available. Using 'C:\Users\Microsoft\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-07-30 11:18:32.915 +05:00 [INF] Now listening on: https://localhost:7259
+2026-07-30 11:18:32.993 +05:00 [INF] Now listening on: http://localhost:5177
+2026-07-30 11:18:33.171 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-30 11:18:33.219 +05:00 [INF] Hosting environment: Development
+2026-07-30 11:18:33.557 +05:00 [INF] Content root path: C:\Users\Microsoft\source\repos\JobPortalAPI\JobPortalAPI
+2026-07-30 11:20:13.874 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/auth/login - null null
+2026-07-30 11:20:13.919 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:13.925 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/auth/login - 204 null null 60.3189ms
+2026-07-30 11:20:13.930 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/auth/login - application/json 64
+2026-07-30 11:20:13.940 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:13.991 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI)'
+2026-07-30 11:20:14.018 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JobPortalAPI.Application.DTOs.Auth.LoginRequestDto) on controller JobPortalAPI.API.Controllers.AuthController (JobPortalAPI).
+2026-07-30 11:20:15.636 +05:00 [INF] Executed DbCommand (71ms) [Parameters=[@__request_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2026-07-30 11:20:16.255 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiryDate], [IsRevoked], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2026-07-30 11:20:16.286 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.DTOs.Auth.AuthResponseDto'.
+2026-07-30 11:20:16.301 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI) in 2275.658ms
+2026-07-30 11:20:16.304 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI)'
+2026-07-30 11:20:16.317 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/auth/login - 200 null application/json; charset=utf-8 2386.5621ms
+2026-07-30 11:20:16.328 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:20:16.334 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:16.336 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:16.341 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:20:16.449 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:20:16.529 +05:00 [INF] Executed DbCommand (10ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:20:16.562 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:20:16.576 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 232.9056ms
+2026-07-30 11:20:16.579 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:20:16.579 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:16.584 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:16.585 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 256.9484ms
+2026-07-30 11:20:16.588 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:16.590 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:20:16.655 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:20:16.660 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:20:16.663 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:20:16.664 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 73.1178ms
+2026-07-30 11:20:16.667 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:16.668 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 90.1059ms
+2026-07-30 11:20:19.580 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:20:19.585 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:19.586 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:19.587 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:20:19.597 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:20:19.604 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:20:19.607 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:20:19.611 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 21.5691ms
+2026-07-30 11:20:19.613 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:20:19.614 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:19.618 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:19.619 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 39.0569ms
+2026-07-30 11:20:19.620 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:19.622 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:20:19.630 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:20:19.635 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:20:19.639 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:20:19.640 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 16.2289ms
+2026-07-30 11:20:19.644 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:20:19.646 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 33.212ms
+2026-07-30 11:20:24.330 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 11:20:24.333 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:24.334 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 4.0086ms
+2026-07-30 11:20:24.338 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundary4eGInN7FWqu9PeBl 218598
+2026-07-30 11:20:24.346 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:24.386 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:20:24.394 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 11:20:24.440 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 11:20:24.448 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 43.8285ms
+2026-07-30 11:20:24.450 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:20:24.452 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 113.9401ms
+2026-07-30 11:20:24.454 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 11:20:24.462 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:24.463 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 9.7ms
+2026-07-30 11:20:24.465 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 11:20:24.469 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:20:24.471 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:20:24.476 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 11:20:24.497 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 11:20:24.510 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:20:24.516 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:20:25.613 +05:00 [INF] Received HTTP response headers after 1093.6375ms - 200
+2026-07-30 11:20:25.617 +05:00 [INF] End processing HTTP request after 1108.9854ms - 200
+2026-07-30 11:20:25.621 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 11:20:25.623 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 1144.2659ms
+2026-07-30 11:20:25.628 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:20:25.633 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 1167.5949ms
+2026-07-30 11:44:56.039 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:44:56.043 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:44:56.044 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:44:56.046 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:44:56.125 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:44:56.141 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:44:56.143 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:44:56.144 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 96.3371ms
+2026-07-30 11:44:56.147 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:44:56.148 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:44:56.154 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:44:56.155 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 115.4021ms
+2026-07-30 11:44:56.155 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:44:56.157 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:44:56.161 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:44:56.164 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:44:56.172 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:44:56.173 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 14.9021ms
+2026-07-30 11:44:56.175 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:44:56.176 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 28.7184ms
+2026-07-30 11:45:00.737 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 11:45:00.741 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:45:00.742 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 4.9675ms
+2026-07-30 11:45:00.744 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundaryzliJA5KnryAhHAPW 218598
+2026-07-30 11:45:00.750 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:45:00.752 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:45:00.752 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 11:45:00.771 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 11:45:00.772 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 17.2991ms
+2026-07-30 11:45:00.773 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:45:00.774 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 29.9161ms
+2026-07-30 11:45:00.780 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 11:45:00.786 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:45:00.787 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 6.7526ms
+2026-07-30 11:45:00.788 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 11:45:00.791 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:45:00.792 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:45:00.793 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 11:45:00.802 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 11:45:00.806 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:45:00.809 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:45:01.929 +05:00 [INF] Received HTTP response headers after 1118.8814ms - 200
+2026-07-30 11:45:01.931 +05:00 [INF] End processing HTTP request after 1124.9407ms - 200
+2026-07-30 11:45:01.934 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 11:45:01.935 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 1141.5579ms
+2026-07-30 11:45:01.937 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:45:01.938 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 1149.491ms
+2026-07-30 11:47:00.509 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:47:00.513 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:00.514 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:47:00.515 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:47:00.524 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:47:00.528 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:47:00.533 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:47:00.535 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 17.4617ms
+2026-07-30 11:47:00.541 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:47:00.541 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:47:00.544 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:00.546 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 37.6926ms
+2026-07-30 11:47:00.548 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:47:00.552 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:47:00.558 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:47:00.563 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:47:00.567 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:47:00.569 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 13.4556ms
+2026-07-30 11:47:00.573 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:47:00.575 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 33.7737ms
+2026-07-30 11:47:04.538 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 11:47:04.548 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:04.549 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 11.0986ms
+2026-07-30 11:47:04.551 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundaryCrTnJWXhQoOSZXtb 218598
+2026-07-30 11:47:04.560 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:04.561 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:47:04.561 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 11:47:04.572 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 11:47:04.574 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 10.9384ms
+2026-07-30 11:47:04.576 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:47:04.577 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 25.7314ms
+2026-07-30 11:47:04.585 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 11:47:04.592 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:04.593 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 8.2157ms
+2026-07-30 11:47:04.597 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 11:47:04.599 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:47:04.600 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:47:04.601 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 11:47:04.606 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 11:47:04.608 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:47:04.610 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:47:23.660 +05:00 [INF] Received HTTP response headers after 19049.1706ms - 200
+2026-07-30 11:47:23.664 +05:00 [INF] End processing HTTP request after 19055.4527ms - 200
+2026-07-30 11:47:23.665 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 11:47:23.670 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 19067.6668ms
+2026-07-30 11:47:23.671 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:47:23.672 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 19075.5799ms
+2026-07-30 11:57:25.234 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:57:25.244 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:25.245 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:57:25.246 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:57:25.367 +05:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:57:25.395 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:57:25.398 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:57:25.403 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 156.5915ms
+2026-07-30 11:57:25.411 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:57:25.412 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:57:25.414 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:25.414 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 180.1336ms
+2026-07-30 11:57:25.415 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:57:25.426 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:57:25.430 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:57:25.432 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:57:25.434 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:57:25.435 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 7.6054ms
+2026-07-30 11:57:25.441 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:57:25.442 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 30.8324ms
+2026-07-30 11:57:54.743 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 11:57:54.748 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:54.749 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 6.4912ms
+2026-07-30 11:57:54.755 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundaryhIla1uXx3XoBiUPh 218598
+2026-07-30 11:57:54.770 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:54.772 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:57:54.773 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 11:57:54.788 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 11:57:54.791 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 16.2839ms
+2026-07-30 11:57:54.792 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:57:54.794 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 38.7314ms
+2026-07-30 11:57:54.798 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 11:57:54.804 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:54.805 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 6.9424ms
+2026-07-30 11:57:54.808 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 11:57:54.810 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:57:54.811 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:57:54.814 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 11:57:54.824 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 11:57:54.836 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:57:54.837 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:57:55.327 +05:00 [INF] Received HTTP response headers after 487.9083ms - 200
+2026-07-30 11:57:55.329 +05:00 [INF] End processing HTTP request after 493.1406ms - 200
+2026-07-30 11:57:55.331 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 11:57:55.334 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 517.4715ms
+2026-07-30 11:57:55.357 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:57:55.385 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 577.4051ms
+2026-07-30 11:59:40.717 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:59:40.927 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:40.929 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:59:40.937 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:59:40.957 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:59:41.038 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:59:41.085 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:59:41.109 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 168.4914ms
+2026-07-30 11:59:41.344 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 11:59:41.383 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:59:41.390 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:41.430 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 712.3451ms
+2026-07-30 11:59:41.455 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:59:41.773 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 11:59:41.781 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 11:59:41.882 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 11:59:42.167 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 11:59:42.188 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 412.1548ms
+2026-07-30 11:59:42.207 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 11:59:42.207 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 863.5252ms
+2026-07-30 11:59:45.756 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 11:59:45.770 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:45.772 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 16.1633ms
+2026-07-30 11:59:45.823 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundaryHpWgVBBqgOguwHbu 218598
+2026-07-30 11:59:45.970 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:45.971 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:59:46.184 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 11:59:46.468 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 11:59:46.513 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 71.8065ms
+2026-07-30 11:59:46.522 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 11:59:46.540 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 717.5306ms
+2026-07-30 11:59:46.544 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 11:59:46.572 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:46.573 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 28.8964ms
+2026-07-30 11:59:46.576 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 11:59:46.666 +05:00 [INF] CORS policy execution successful.
+2026-07-30 11:59:46.704 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 11:59:46.718 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 11:59:47.194 +05:00 [INF] Executed DbCommand (469ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 11:59:47.916 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 11:59:48.181 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 12:00:15.457 +05:00 [INF] Received HTTP response headers after 27106.1244ms - 200
+2026-07-30 12:00:15.460 +05:00 [INF] End processing HTTP request after 27544.2169ms - 200
+2026-07-30 12:00:15.462 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 12:00:15.463 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 28739.4897ms
+2026-07-30 12:00:15.464 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 12:00:15.464 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 28888.3536ms
+2026-07-30 12:08:59.511 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 12:09:00.094 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:09:00.109 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 598.6874ms
+2026-07-30 12:09:00.142 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundary07ACNkkVclic84J7 218598
+2026-07-30 12:09:00.839 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:09:01.164 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 12:09:01.167 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 12:09:01.178 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 12:09:01.207 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 38.5216ms
+2026-07-30 12:09:01.209 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 12:09:01.210 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 1068.3495ms
+2026-07-30 12:09:01.218 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 12:09:01.222 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:09:01.223 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 5.3385ms
+2026-07-30 12:09:01.225 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 12:09:01.232 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:09:01.234 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 12:09:01.235 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 12:09:01.418 +05:00 [INF] Executed DbCommand (27ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 12:09:01.425 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 12:09:01.426 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 12:09:46.513 +05:00 [INF] Received HTTP response headers after 45086.9968ms - 500
+2026-07-30 12:09:46.517 +05:00 [INF] End processing HTTP request after 45093.3076ms - 500
+2026-07-30 12:09:46.706 +05:00 [INF] Executing ObjectResult, writing value of type '<>f__AnonymousType2`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 12:09:46.709 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 45474.1782ms
+2026-07-30 12:09:46.711 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 12:09:46.712 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 500 null application/json; charset=utf-8 45488.3487ms
+2026-07-30 12:35:19.714 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:19.718 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:19.719 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:19.719 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:19.775 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:19.783 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:19.785 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:19.786 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 65.7627ms
+2026-07-30 12:35:19.790 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:19.791 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:19.793 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 79.4721ms
+2026-07-30 12:35:19.795 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:19.797 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:19.798 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:19.801 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:19.804 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:19.807 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:19.809 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 10.1185ms
+2026-07-30 12:35:19.810 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:19.811 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 20.0863ms
+2026-07-30 12:35:23.857 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 12:35:23.859 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:23.860 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 3.2411ms
+2026-07-30 12:35:23.862 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundarytgVIXspYJcVsLYRH 218598
+2026-07-30 12:35:23.867 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:23.873 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '7/30/2026 7:20:16 AM', Current time (UTC): '7/30/2026 7:35:23 AM'.
+   at Microsoft.IdentityModel.Tokens.ValidatorUtilities.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateTokenPayloadAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+   at Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler.ValidateJWSAsync(JsonWebToken jsonWebToken, TokenValidationParameters validationParameters, BaseConfiguration configuration)
+2026-07-30 12:35:23.928 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo (UTC): '7/30/2026 7:20:16 AM', Current time (UTC): '7/30/2026 7:35:23 AM'.
+2026-07-30 12:35:23.933 +05:00 [INF] Authorization failed. These requirements were not met:
+RolesAuthorizationRequirement:User.IsInRole must be true for one of the following roles: (Candidate)
+2026-07-30 12:35:23.941 +05:00 [INF] AuthenticationScheme: Bearer was challenged.
+2026-07-30 12:35:23.945 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 401 0 null 82.4196ms
+2026-07-30 12:35:45.755 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/auth/login - null null
+2026-07-30 12:35:45.759 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:45.763 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/auth/login - 204 null null 7.7511ms
+2026-07-30 12:35:45.765 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/auth/login - application/json 64
+2026-07-30 12:35:45.770 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:45.771 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI)'
+2026-07-30 12:35:45.772 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(JobPortalAPI.Application.DTOs.Auth.LoginRequestDto) on controller JobPortalAPI.API.Controllers.AuthController (JobPortalAPI).
+2026-07-30 12:35:45.779 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_Email_0='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Users] AS [u]
+WHERE [u].[Email] = @__request_Email_0
+2026-07-30 12:35:46.034 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (DbType = DateTime2), @p3='?' (DbType = Boolean), @p4='?' (Size = 4000), @p5='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [RefreshTokens] ([Id], [CreatedAt], [ExpiryDate], [IsRevoked], [Token], [UserId])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2026-07-30 12:35:46.039 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.DTOs.Auth.AuthResponseDto'.
+2026-07-30 12:35:46.044 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI) in 270.5819ms
+2026-07-30 12:35:46.045 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.AuthController.Login (JobPortalAPI)'
+2026-07-30 12:35:46.046 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/auth/login - 200 null application/json; charset=utf-8 281.8296ms
+2026-07-30 12:35:46.056 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:46.058 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:46.058 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:46.059 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:46.063 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:46.067 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:46.069 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:46.070 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 9.4967ms
+2026-07-30 12:35:46.071 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:46.071 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:46.075 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:46.075 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 19.2418ms
+2026-07-30 12:35:46.076 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:46.077 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:46.080 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:46.082 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:46.084 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:46.084 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 6.3145ms
+2026-07-30 12:35:46.086 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:46.087 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 16.1969ms
+2026-07-30 12:35:47.548 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:47.554 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:47.555 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:47.556 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:47.559 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:47.563 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:47.564 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:47.566 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 8.9325ms
+2026-07-30 12:35:47.567 +05:00 [INF] Request starting HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - null null
+2026-07-30 12:35:47.568 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:47.571 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:47.572 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 24.174ms
+2026-07-30 12:35:47.576 +05:00 [INF] Executing endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:47.579 +05:00 [INF] Route matched with {action = "GetJobs", controller = "Jobs"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetJobs(Int32, Int32, System.String, System.String, System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller JobPortalAPI.API.Controllers.JobsController (JobPortalAPI).
+2026-07-30 12:35:47.587 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Jobs] AS [j]
+2026-07-30 12:35:47.589 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[CreatedAt], [t].[Description], [t].[ExpiryDate], [t].[JobType], [t].[Location], [t].[RecruiterId], [t].[Salary], [t].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM (
+    SELECT [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title]
+    FROM [Jobs] AS [j]
+    ORDER BY [j].[CreatedAt] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+INNER JOIN [Users] AS [u] ON [t].[RecruiterId] = [u].[Id]
+ORDER BY [t].[CreatedAt] DESC
+2026-07-30 12:35:47.592 +05:00 [INF] Executing OkObjectResult, writing value of type 'JobPortalAPI.Application.Common.PagedResult`1[[JobPortalAPI.Application.DTOs.Job.JobResponseDto, JobPortalAPI.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-07-30 12:35:47.593 +05:00 [INF] Executed action JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI) in 10.0704ms
+2026-07-30 12:35:47.594 +05:00 [INF] Executed endpoint 'JobPortalAPI.API.Controllers.JobsController.GetJobs (JobPortalAPI)'
+2026-07-30 12:35:47.595 +05:00 [INF] Request finished HTTP/2 GET https://localhost:7259/api/jobs?page=1&pageSize=50 - 200 null application/json; charset=utf-8 27.9765ms
+2026-07-30 12:35:51.500 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 12:35:51.503 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:51.504 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 3.7269ms
+2026-07-30 12:35:51.508 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundary6yxDdxCuh5Ek0ylo 218598
+2026-07-30 12:35:51.519 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:51.520 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 12:35:51.520 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 12:35:51.529 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 12:35:51.530 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 8.5705ms
+2026-07-30 12:35:51.531 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 12:35:51.532 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 23.5482ms
+2026-07-30 12:35:51.534 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 12:35:51.537 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:51.537 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 3.2613ms
+2026-07-30 12:35:51.542 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 12:35:51.545 +05:00 [INF] CORS policy execution successful.
+2026-07-30 12:35:51.546 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 12:35:51.547 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 12:35:51.553 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 12:35:51.555 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 12:35:51.557 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 12:35:52.343 +05:00 [INF] Received HTTP response headers after 785.0142ms - 200
+2026-07-30 12:35:52.345 +05:00 [INF] End processing HTTP request after 790.1765ms - 200
+2026-07-30 12:35:52.346 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 12:35:52.347 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 798.506ms
+2026-07-30 12:35:52.348 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 12:35:52.348 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 806.5829ms
+2026-07-30 13:18:22.737 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/files/upload - null null
+2026-07-30 13:18:22.739 +05:00 [INF] CORS policy execution successful.
+2026-07-30 13:18:22.739 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/files/upload - 204 null null 36.95ms
+2026-07-30 13:18:22.741 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/files/upload - multipart/form-data; boundary=----WebKitFormBoundarygZVXhQBrpd9Ttgc8 218598
+2026-07-30 13:18:22.745 +05:00 [INF] CORS policy execution successful.
+2026-07-30 13:18:22.746 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 13:18:22.747 +05:00 [INF] Route matched with {action = "UploadCV", controller = "Files"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] UploadCV(Microsoft.AspNetCore.Http.IFormFile) on controller JobPortalAPI.Controllers.FilesController (JobPortalAPI).
+2026-07-30 13:18:22.756 +05:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType1`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-30 13:18:22.758 +05:00 [INF] Executed action JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI) in 9.4854ms
+2026-07-30 13:18:22.758 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.FilesController.UploadCV (JobPortalAPI)'
+2026-07-30 13:18:22.759 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/files/upload - 200 null application/json; charset=utf-8 17.6343ms
+2026-07-30 13:18:22.761 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:7259/api/skillgap - null null
+2026-07-30 13:18:22.766 +05:00 [INF] CORS policy execution successful.
+2026-07-30 13:18:22.767 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:7259/api/skillgap - 204 null null 5.4862ms
+2026-07-30 13:18:22.770 +05:00 [INF] Request starting HTTP/2 POST https://localhost:7259/api/skillgap - application/json 121
+2026-07-30 13:18:22.772 +05:00 [INF] CORS policy execution successful.
+2026-07-30 13:18:22.772 +05:00 [INF] Executing endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 13:18:22.773 +05:00 [INF] Route matched with {action = "AnalyzeSkillGap", controller = "SkillGap"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] AnalyzeSkillGap(JobPortalAPI.Controllers.SkillGapRequest) on controller JobPortalAPI.Controllers.SkillGapController (JobPortalAPI).
+2026-07-30 13:18:22.828 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@__id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [j].[Id], [j].[CreatedAt], [j].[Description], [j].[ExpiryDate], [j].[JobType], [j].[Location], [j].[RecruiterId], [j].[Salary], [j].[Title], [u].[Id], [u].[CreatedAt], [u].[Email], [u].[FullName], [u].[PasswordHash], [u].[Role]
+FROM [Jobs] AS [j]
+INNER JOIN [Users] AS [u] ON [j].[RecruiterId] = [u].[Id]
+WHERE [j].[Id] = @__id_0
+2026-07-30 13:18:22.831 +05:00 [INF] Start processing HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 13:18:22.832 +05:00 [INF] Sending HTTP request POST http://127.0.0.1:8000/skill-gap
+2026-07-30 13:18:23.327 +05:00 [INF] Received HTTP response headers after 494.1425ms - 200
+2026-07-30 13:18:23.328 +05:00 [INF] End processing HTTP request after 496.9044ms - 200
+2026-07-30 13:18:23.329 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2026-07-30 13:18:23.330 +05:00 [INF] Executed action JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI) in 555.6245ms
+2026-07-30 13:18:23.331 +05:00 [INF] Executed endpoint 'JobPortalAPI.Controllers.SkillGapController.AnalyzeSkillGap (JobPortalAPI)'
+2026-07-30 13:18:23.331 +05:00 [INF] Request finished HTTP/2 POST https://localhost:7259/api/skillgap - 200 null text/plain; charset=utf-8 561.4176ms

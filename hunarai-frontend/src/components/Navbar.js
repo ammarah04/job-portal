@@ -1,4 +1,4 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
+﻿import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -37,9 +37,19 @@ export default function Navbar() {
             Skill Gap
           </Link>
         )}
+        {role === "Candidate" && (
+          <Link to="/my-applications" className={linkClass("/my-applications")}>
+            My Applications
+          </Link>
+        )}
         {role === "Recruiter" && (
           <Link to="/post-job" className={linkClass("/post-job")}>
             Post Job
+          </Link>
+        )}
+        {role === "Recruiter" && (
+          <Link to="/my-jobs" className={linkClass("/my-jobs")}>
+            My Jobs
           </Link>
         )}
         <button

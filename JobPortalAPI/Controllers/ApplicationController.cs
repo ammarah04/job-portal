@@ -61,7 +61,20 @@ public class ApplicationController : ControllerBase
         catch (UnauthorizedAccessException) { return Forbid(); }
     }
 
-    // ── Helper ───────────────────────────────────────────────────────────────
+    [HttpGet("job/{jobId:guid}")]
+    [Authorize(Roles = "Recruiter")]
+    public async Task<IActionResult> GetApplicantsForJob(Guid jobId)
+    {
+        var recruiterId = GetCurrentUserId();
+        try
+        {
+            var result = await _applicationService.GetApplicantsForJobAsync(jobId, recruiterId);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex) { return NotFound(new { message = ex.Message }); }
+        catch (UnauthorizedAccessException) { return Forbid(); }
+    }
+
 
     private Guid GetCurrentUserId()
     {

@@ -38,6 +38,22 @@
   },
   {
     "ContainingType": "JobPortalAPI.Controllers.ApplicationController",
+    "Method": "GetApplicantsForJob",
+    "RelativePath": "api/applications/job/{jobId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "jobId",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobPortalAPI.Controllers.ApplicationController",
     "Method": "GetMyApplications",
     "RelativePath": "api/applications/my",
     "HttpMethod": "GET",
@@ -234,6 +250,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "JobPortalAPI.API.Controllers.JobsController",
+    "Method": "GetMyJobs",
+    "RelativePath": "api/Jobs/mine",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
