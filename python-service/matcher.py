@@ -6,13 +6,16 @@ from skill_normalizer import normalize_skills
 
 # setup
 model = SentenceTransformer('all-MiniLM-L6-v2')
-client = QdrantClient(":memory:")
+import os
+qdrant_host = os.getenv("QDRANT_HOST", "localhost")
+client = QdrantClient(host=qdrant_host, port=6333)
 
 # create collection
-client.create_collection(
-    collection_name="jobs",
-    vectors_config=VectorParams(size=384, distance=Distance.COSINE)
-)
+if not client.collection_exists("jobs"):
+    client.create_collection(
+        collection_name="jobs",
+        vectors_config=VectorParams(size=384, distance=Distance.COSINE)
+    )
 
 # fake jobs (later replaced with real ones from SQL Server)
 jobs = [

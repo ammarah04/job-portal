@@ -36,3 +36,7 @@ node_modules/
 # OS
 Thumbs.db
 .DS_Store
+appsettings.json
+appsettings.*.json
+!appsettings.Example.json
+Logs/

@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+**/.vs/
+**/Uploads/
+**/Logs/
+*.user
+python-service/
+hunarai-frontend/
